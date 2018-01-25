@@ -1,0 +1,18 @@
+version: '3.4'
+
+networks:
+  grace-test:
+    driver: overlay
+    driver_opts:
+      secure: ""
+
+services:
+  grace:
+    image: "grace-test:local"
+    networks:
+      - "grace-test"
+    command:
+      - --grace=1m30s
+    deploy:
+      replicas: 1
+    stop_grace_period: 2m
