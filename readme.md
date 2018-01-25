@@ -3,12 +3,10 @@
 Docker swarm provides the `--stop-grace-period` flag on shutdown/update of a service, which indicates to the reaper that the container requires time to shutdown properly. This does however produce unexpected behaviour during update of a service. The following service log shows the behaviour:
 
 ```
-grace-test_grace.1.v5hqsmvoch1t@linuxkit-025000000001    | 2018/01/25 10:08:39 Starting new server
-grace-test_grace.1.v5hqsmvoch1t@linuxkit-025000000001    | 2018/01/25 10:08:48 Signal terminated received, sleeping for 1m30s
-grace-test_grace.1.v5hqsmvoch1t@linuxkit-025000000001    | 2018/01/25 10:10:18 Exit
-grace-test_grace.1.72yjxclc46lw@linuxkit-025000000001    | 2018/01/25 10:10:47 Signal terminated received, sleeping for 1m30s
-grace-test_grace.1.imh2s338u947@linuxkit-025000000001    | 2018/01/25 10:11:45 Starting new server
-grace-test_grace.1.72yjxclc46lw@linuxkit-025000000001    | 2018/01/25 10:12:17 Exit
+grace-test_grace.1.utgh2ncsc4d0@linuxkit-025000000001    | 2018/01/25 10:53:54 Starting new server
+grace-test_grace.1.utgh2ncsc4d0@linuxkit-025000000001    | 2018/01/25 10:54:03 Signal terminated received, sleeping for 1m30s
+grace-test_grace.1.f5puij54d7jj@linuxkit-025000000001    | 2018/01/25 10:55:01 Starting new server
+grace-test_grace.1.utgh2ncsc4d0@linuxkit-025000000001    | 2018/01/25 10:55:33 Exit
 ```
 
 The service was set to have a 2m grace period and sleeps for 1m30s before it actually exits. This works as expected, however a second instance is started after 1m, which is unexpected. The expected behaviour would be that docker waits for the old instance to exit before starting the new one.
